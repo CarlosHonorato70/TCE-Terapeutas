@@ -9,7 +9,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
-    <!-- Header -->
     <header class="header">
         <div class="container">
             <div class="logo">
@@ -23,7 +22,6 @@
         </div>
     </header>
 
-    <!-- Hero Section -->
     <section class="hero">
         <div class="container">
             <div class="hero-content">
@@ -89,7 +87,6 @@
         </div>
     </section>
 
-    <!-- About Section -->
     <section id="sobre" class="about">
         <div class="container">
             <div class="section-header">
@@ -135,7 +132,6 @@
         </div>
     </section>
 
-    <!-- Benefits Section -->
     <section id="beneficios" class="benefits">
         <div class="container">
             <div class="section-header">
@@ -172,7 +168,6 @@
         </div>
     </section>
 
-    <!-- Bonus Section -->
     <section class="bonus">
         <div class="container">
             <div class="section-header">
@@ -204,7 +199,6 @@
         </div>
     </section>
 
-    <!-- CTA Section -->
     <section id="download" class="cta-section">
         <div class="container">
             <div class="cta-content">
@@ -216,7 +210,6 @@
         </div>
     </section>
 
-    <!-- Footer -->
     <footer class="footer">
         <div class="container">
             <div class="footer-content">
@@ -246,9 +239,10 @@
     <h3>Baixe seu E-book Grátis!</h3>
     <p>Insira seu e-mail para receber o link de download.</p>
     
-    <form id="lead-form">
+    <form id="lead-form" action="https://formspree.io/f/myzdglnv" method="POST">
         <input type="email" id="email-input" name="email" placeholder="Seu melhor e-mail" required style="width: 80%; padding: 10px; margin-bottom: 10px;">
         <button type="submit" style="padding: 10px 20px; background-color: #007BFF; color: white; border: none; cursor: pointer;">Baixar E-book</button>
+        <input type="hidden" name="_next" value="https://drive.google.com/file/d/1rozi5qnZpFI-UC7-WZ8WdGxI2kONMkD6/view?usp=sharing" />
     </form>
     
     <div id="download-link-container" style="display: none; margin-top: 15px;">
@@ -284,33 +278,7 @@
             popupOverlay.style.display = 'none';
             popupBox.style.display = 'none';
         };
-
-        // Lida com o envio do formulário
-        leadForm.addEventListener('submit', function(e) {
-            e.preventDefault();
-            const email = document.getElementById('email-input').value;
-            
-            // Aqui você pode integrar um serviço de terceiros para salvar o e-mail
-            // Por exemplo, usando Formspree ou Mailchimp
-            // fetch('https://formspree.io/f/seu-id-aqui', {
-            //     method: 'POST',
-            //     headers: { 'Content-Type': 'application/json' },
-            //     body: JSON.stringify({ email: email })
-            // }).then(response => {
-            //     if (response.ok) {
-            //         console.log('E-mail enviado com sucesso!');
-            //     } else {
-            //         console.log('Erro ao enviar e-mail.');
-            //     }
-            // });
-            
-            // Simula o sucesso e mostra o link de download
-            leadForm.style.display = 'none';
-            downloadLinkContainer.style.display = 'block';
-            downloadLink.href = ebookUrl;
-        });
     });
 </script>
 </body>
 </html>
-
