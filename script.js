@@ -55,16 +55,19 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
-    // Código de animação do menu e estatísticas, mantido do seu arquivo original
+    // Código de animação do menu e estatísticas
     const statNumbers = document.querySelectorAll('.stat-number');
     statNumbers.forEach(stat => {
-        const finalValue = stat.textContent;
-        const isPercentage = finalValue.includes('%');
-        const isPlus = finalValue.includes('+');
-        const numericValue = parseInt(finalValue.replace(/[^\\d]/g, ''));
+        // Remove todos os caracteres não numéricos, exceto o ponto
+        const finalValue = stat.textContent.replace(/[^\d.]/g, ''); 
+        const isPercentage = stat.textContent.includes('%');
+        const isPlus = stat.textContent.includes('+');
+        const numericValue = parseFloat(finalValue);
         
+        if (isNaN(numericValue)) return; // Sai se não for um número válido
+
         let currentValue = 0;
-        const increment = numericValue / 50;
+        const increment = numericValue / 50; // 50 passos
         
         const counter = setInterval(() => {
             currentValue += increment;
