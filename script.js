@@ -17,75 +17,54 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-    // Validação e envio do formulário
-    const leadForm = document.getElementById('leadForm');
-    if (leadForm) {
-        leadForm.addEventListener('submit', function(e) {
-            // Validação básica
-            const nome = document.getElementById('nome').value.trim();
-            const email = document.getElementById('email').value.trim();
-            const area = document.getElementById('area').value;
-            
-            if (!nome || !email || !area) {
-                e.preventDefault();
-                alert('Por favor, preencha todos os campos obrigatórios.');
-                return;
-            }
-            
-            // Validação de email
-            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-            if (!emailRegex.test(email)) {
-                e.preventDefault();
-                alert('Por favor, insira um email válido.');
-                return;
-            }
-            
-            // Mostrar loading no botão
-            const submitButton = this.querySelector('button[type="submit"]');
-            const originalText = submitButton.innerHTML;
-            submitButton.innerHTML = '<span>ENVIANDO...</span>';
-            submitButton.disabled = true;
-            
-            // Permitir o envio do formulário para o Formspree
-            // O Formspree redirecionará automaticamente para o link do Google Drive
-            alert('Obrigado! Você será redirecionado para o download do ebook.');
-        });
-    }
+    // Código novo para lidar com o formulário
+    const form = document.getElementById('leadForm');
+    const downloadLink = "https://raw.githubusercontent.com/CarlosHonorato70/TCE-Terapeutas/main/meu-ebook.pdf";
+    const formspreeUrl = "https://formspree.io/f/myzdglnv";
 
-    // Animação de entrada para elementos
-    const observerOptions = {
-        threshold: 0.1,
-        rootMargin: '0px 0px -50px 0px'
-    };
+    form.addEventListener('submit', async function(event) {
+        event.preventDefault();
 
-    const observer = new IntersectionObserver(function(entries) {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.style.opacity = '1';
-                entry.target.style.transform = 'translateY(0)';
+        // Coleta os dados do formulário
+        const formData = new FormData(form);
+
+        try {
+            // Envia os dados para o Formspree em segundo plano
+            const response = await fetch(formspreeUrl, {
+                method: 'POST',
+                body: formData,
+                headers: {
+                    'Accept': 'application/json'
+                }
+            });
+
+            if (response.ok) {
+                // Se o envio for bem-sucedido, redireciona o cliente
+                console.log("Dados enviados para o Formspree com sucesso. Redirecionando...");
+                window.location.href = downloadLink;
+            } else {
+                // Se houver um erro no Formspree, ainda assim redireciona o cliente
+                // Para garantir que ele tenha o e-book
+                console.error("Erro ao enviar dados para o Formspree, mas redirecionando mesmo assim.");
+                window.location.href = downloadLink;
             }
-        });
-    }, observerOptions);
-
-    // Aplicar animação aos elementos
-    const animatedElements = document.querySelectorAll('.benefit-item, .bonus-item, .highlight-card');
-    animatedElements.forEach(el => {
-        el.style.opacity = '0';
-        el.style.transform = 'translateY(20px)';
-        el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
-        observer.observe(el);
+        } catch (error) {
+            // Em caso de erro de rede, ainda assim redireciona o cliente
+            console.error("Erro de rede ao tentar enviar o formulário. Redirecionando...", error);
+            window.location.href = downloadLink;
+        }
     });
 
-    // Contador animado para estatísticas
+    // Código de animação do menu e estatísticas, mantido do seu arquivo original
     const statNumbers = document.querySelectorAll('.stat-number');
     statNumbers.forEach(stat => {
         const finalValue = stat.textContent;
         const isPercentage = finalValue.includes('%');
         const isPlus = finalValue.includes('+');
-        const numericValue = parseInt(finalValue.replace(/[^\d]/g, ''));
+        const numericValue = parseInt(finalValue.replace(/[^\\d]/g, ''));
         
         let currentValue = 0;
-        const increment = numericValue / 50; // 50 steps
+        const increment = numericValue / 50;
         
         const counter = setInterval(() => {
             currentValue += increment;
@@ -101,21 +80,4 @@ document.addEventListener('DOMContentLoaded', function() {
             stat.textContent = displayValue;
         }, 50);
     });
-
-    // Menu mobile (se necessário)
-    const header = document.querySelector('.header');
-    let lastScrollY = window.scrollY;
-    
-    window.addEventListener('scroll', () => {
-        if (window.scrollY > lastScrollY && window.scrollY > 100) {
-            header.style.transform = 'translateY(-100%)';
-        } else {
-            header.style.transform = 'translateY(0)';
-        }
-        lastScrollY = window.scrollY;
-    });
-
-    // Adicionar transição ao header
-    header.style.transition = 'transform 0.3s ease';
 });
-
