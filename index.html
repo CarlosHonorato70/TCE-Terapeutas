@@ -56,7 +56,8 @@
                         </div>
                     </div>
                     
-                    <form class="lead-form" id="leadForm" action="https://formspree.io/f/myzdglnv" method="POST">
+                    <!-- O action do formulário foi removido para ser controlado pelo JavaScript -->
+                    <form class="lead-form" id="leadForm">
                         <h3>Baixe Agora Seu Guia Gratuito!</h3>
                         <div class="form-group">
                             <input type="text" id="nome" name="nome" placeholder="Nome Completo" required>
@@ -83,7 +84,7 @@
                             </svg>
                         </button>
                         <p class="form-disclaimer">🔒 Seus dados estão seguros. Não enviamos spam.</p>
-                        <input type="hidden" name="_next" value="https://raw.githubusercontent.com/CarlosHonorato70/TCE-Terapeutas/main/meu-ebook.pdf" />
+                        <!-- O campo _next foi removido, pois o redirecionamento será feito via JavaScript -->
                     </form>
                 </div>
             </div>
@@ -236,6 +237,7 @@
             </div>
         </div>
     </footer>
-    
+
+    <script src="script.js"></script>
 </body>
 </html>
