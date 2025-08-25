@@ -239,9 +239,10 @@
     <h3>Baixe seu E-book Grátis!</h3>
     <p>Insira seu e-mail para receber o link de download.</p>
     
-    <form id="lead-form">
+    <form id="lead-form" action="https://formspree.io/f/myzdglnv" method="POST">
         <input type="email" id="email-input" name="email" placeholder="Seu melhor e-mail" required style="width: 80%; padding: 10px; margin-bottom: 10px;">
         <button type="submit" style="padding: 10px 20px; background-color: #007BFF; color: white; border: none; cursor: pointer;">Baixar E-book</button>
+        <input type="hidden" name="_next" value="https://drive.google.com/file/d/1rozi5qnZpFI-UC7-WZ8WdGxI2kONMkD6/view?usp=sharing" />
     </form>
     
     <div id="download-link-container" style="display: none; margin-top: 15px;">
@@ -258,11 +259,9 @@
         const leadForm = document.getElementById('lead-form');
         const downloadLinkContainer = document.getElementById('download-link-container');
         const downloadLink = document.getElementById('download-link');
-        const emailInput = document.getElementById('email-input');
 
-        // URL do seu e-book
-        const ebookUrl = 'https://drive.google.com/file/d/1rozi5qnZpFI-UC7-WZ8WdGxI2kONMkD6/view?usp=sharing'; 
-        const formspreeUrl = 'https://formspree.io/f/xandwaal';
+        // URL do seu e-book (substitua pelo link correto)
+        const ebookUrl = 'https://drive.google.com/file/d/1rozi5qnZpFI-UC7-WZ8WdGxI2kONMkD6/view?usp=sharing'; // Substitua pelo link do seu ebook, por exemplo, um arquivo PDF no seu repositório.
 
         // Mostra o pop-up após um certo tempo (ex: 3 segundos)
         setTimeout(() => {
@@ -279,29 +278,30 @@
             popupOverlay.style.display = 'none';
             popupBox.style.display = 'none';
         };
-        
-        // Lida com o envio do formulário usando a API Fetch
+
+        // Lida com o envio do formulário
         leadForm.addEventListener('submit', function(e) {
             e.preventDefault();
-            const email = emailInput.value;
+            const email = document.getElementById('email-input').value;
             
-            // Envia o e-mail para o Formspree
-            fetch(formspreeUrl, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ email: email })
-            }).then(response => {
-                if (response.ok) {
-                    // Se o envio for bem-sucedido, esconde o formulário e mostra o link de download
-                    leadForm.style.display = 'none';
-                    downloadLinkContainer.style.display = 'block';
-                    downloadLink.href = ebookUrl;
-                } else {
-                    console.error('Erro ao enviar o formulário.');
-                }
-            }).catch(error => {
-                console.error('Erro:', error);
-            });
+            // Aqui você pode integrar um serviço de terceiros para salvar o e-mail
+            // Por exemplo, usando Formspree ou Mailchimp
+            // fetch('https://formspree.io/f/seu-id-aqui', {
+            //     method: 'POST',
+            //     headers: { 'Content-Type': 'application/json' },
+            //     body: JSON.stringify({ email: email })
+            // }).then(response => {
+            //     if (response.ok) {
+            //         console.log('E-mail enviado com sucesso!');
+            //     } else {
+            //         console.log('Erro ao enviar e-mail.');
+            //     }
+            // });
+            
+            // Simula o sucesso e mostra o link de download
+            leadForm.style.display = 'none';
+            downloadLinkContainer.style.display = 'block';
+            downloadLink.href = ebookUrl;
         });
     });
 </script>
